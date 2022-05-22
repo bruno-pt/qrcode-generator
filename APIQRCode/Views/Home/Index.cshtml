@@ -1,0 +1,20 @@
+﻿@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "QRCode Generator";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="text-align:center;">
+    <h1 style="margin-top:0px; margin-bottom:1.5px;">QRCode Generator</h1>
+    <div>by</div>
+    <a href="https://www.instagram.com/bptzin/" style="text-align:center;">&#64;bptzin</a>
+</div>
+<form asp-action="Index" asp-controller="Home" style="padding-top:30px;">
+    <input type="text" name="qrCodeText" style="display:block; margin-left: auto; margin-right: auto; justify-content:center; margin-bottom:5.5px" />
+    <input type="submit" value="Generate" style="display:block; margin-left: auto; margin-right: auto; justify-content:center;" />
+</form>
+
+@if (ViewBag.QRCodeImage != null)
+{
+    <img src="@ViewBag.QRCodeImage" alt="" style="display:block; margin-left: auto; margin-right: auto; height:300px; width:300px" />
+}
