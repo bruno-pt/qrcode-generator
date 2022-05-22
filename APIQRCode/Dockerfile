@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
+RUN apt-get update && apt-get install -y apt-utils libgdiplus libc6-dev
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
@@ -7,7 +8,7 @@ COPY *.csproj ./
 RUN dotnet restore
 
 # Copy everything else and build
-COPY ../engine/examples ./
+COPY . ./
 RUN dotnet publish -c Release -o out
 
 # Build runtime image
