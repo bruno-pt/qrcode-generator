@@ -12,26 +12,6 @@ namespace APIQRCode.Services
 {
     public class QRCodeService
     {
-        /*public string GenerateQRCodeBase644(string text)
-        {
-            string qrCodeModel;
-
-            using (MemoryStream ms = new MemoryStream())
-            {
-                QRCodeGenerator qrGenerator = new QRCodeGenerator();
-                QRCodeData qrCodeData = qrGenerator.CreateQrCode(text, QRCodeGenerator.ECCLevel.Q);
-                QRCode qrCode = new QRCode(qrCodeData);
-
-                Bitmap bitmap = qrCode.GetGraphic(20);
-
-                byte[] bitmapArray = bitmap.BitmapToByteArray();
-
-                qrCodeModel = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(bitmapArray));
-            }
-
-            return qrCodeModel;
-        }*/
-
         public string GenerateQRCodeBase64(string text)
         {
             using var output = new FileStream("qrcode.png", FileMode.OpenOrCreate);
@@ -57,21 +37,5 @@ namespace APIQRCode.Services
             string base64String = Convert.ToBase64String(imageBytes);
             return base64String;
         }
-    }
-
-    
-
-    public static class BitmapExtension
-    {
-        public static byte[] BitmapToByteArray(this Bitmap bitmap)
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                bitmap.Save(ms, ImageFormat.Png);
-                return ms.ToArray();
-            }
-        }
-
-        
     }
 }

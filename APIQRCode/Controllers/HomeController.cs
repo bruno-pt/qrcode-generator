@@ -11,27 +11,28 @@ using System.Security.Policy;
 
 namespace APIQRCode.Controllers
 {
-    //[Route("api/[controller]")]
-    //[ApiController]
     public class HomeController : Controller
     {
         [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Index()
         {
-            return View("Index", "~/Views/Shared/_Layout.cshtml");
+            return View();
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]
         [HttpPost]
         public IActionResult Index(string qrCodeText)
         {
+            if (qrCodeText == null)
+                return RedirectToAction("Index");
+
             try
             {
                 QRCodeService qrCodeService = new QRCodeService();
 
-                string qrCodeBase64 = qrCodeService.GenerateQRCodeBase64(qrCodeText);
+                string base64 = qrCodeService.GenerateQRCodeBase64(qrCodeText);
 
-                ViewBag.QRCodeImage = qrCodeBase64;
+                ViewBag.QRCodeImage = base64;
 
                 return View();
             }
@@ -59,20 +60,6 @@ namespace APIQRCode.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new ErrorModel(ex.Message));
-            }
-        }
-    }
-
-
-
-    public static class BitmapExtension
-    {
-        public static byte[] BitmapToByteArray(this Bitmap bitmap)
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                bitmap.Save(ms, ImageFormat.Png);
-                return ms.ToArray();
             }
         }
     }
